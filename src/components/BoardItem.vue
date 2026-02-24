@@ -1,0 +1,255 @@
+<script setup>
+import { ref } from 'vue'
+import CardContent from './CardContent.vue'
+import { useCorkboardStore } from '@/stores/corkboard'
+
+const props = defineProps({
+  item: {
+    type: Object,
+    required: true,
+  },
+  connectMode: {
+    type: Boolean,
+    default: false,
+  },
+})
+
+const emit = defineEmits(['drag', 'pin-click', 'delete'])
+
+const store = useCorkboardStore()
+
+const isDragging = ref(false)
+const isHovered = ref(false)
+const expanded = ref(false)
+const dragMoved = ref(false)
+const dragStart = ref({ ptrX: 0, ptrY: 0, itemX: 0, itemY: 0 })
+
+function onPointerDown(e) {
+  // Don't initiate drag if target is the pushpin or delete button
+  if (e.target.closest('.pushpin') || e.target.closest('.delete-btn')) return
+  e.preventDefault()
+  e.currentTarget.setPointerCapture(e.pointerId)
+  isDragging.value = true
+  dragMoved.value = false
+  dragStart.value = {
+    ptrX: e.clientX,
+    ptrY: e.clientY,
+    itemX: props.item.x,
+    itemY: props.item.y,
+  }
+  // Bring to front immediately
+  store.moveItem(props.item.id, props.item.x, props.item.y)
+}
+
+function onPointerMove(e) {
+  if (!isDragging.value) return
+  const dx = e.clientX - dragStart.value.ptrX
+  const dy = e.clientY - dragStart.value.ptrY
+  if (!dragMoved.value && (Math.abs(dx) > 4 || Math.abs(dy) > 4)) {
+    dragMoved.value = true
+  }
+  emit('drag', props.item.id, dragStart.value.itemX + dx, dragStart.value.itemY + dy)
+}
+
+function onPointerUp(e) {
+  if (!isDragging.value) return
+  isDragging.value = false
+  e.currentTarget.releasePointerCapture(e.pointerId)
+  if (!dragMoved.value) {
+    expanded.value = !expanded.value
+  }
+}
+
+function onPinClick(e) {
+  e.stopPropagation()
+  emit('pin-click', props.item.id)
+}
+</script>
+
+<template>
+  <div
+    class="board-item"
+    :class="{
+      dragging: isDragging,
+      'connect-source': connectMode && item.id === $props.item.id,
+    }"
+    :style="{
+      left: item.x + 'px',
+      top: item.y + 'px',
+      transform: `rotate(${item.rotation}deg)`,
+      zIndex: isDragging ? 500 : item.zIndex,
+    }"
+    @pointerdown="onPointerDown"
+    @pointermove="onPointerMove"
+    @pointerup="onPointerUp"
+    @pointerenter="isHovered = true"
+    @pointerleave="isHovered = false"
+  >
+    <!-- Pushpin -->
+    <div
+      class="pushpin"
+      :class="{ 'connect-mode': connectMode }"
+      @pointerdown.stop="onPinClick"
+    >
+      <div class="pin-head" />
+      <div class="pin-needle" />
+    </div>
+
+    <!-- Collapsed: polaroid view -->
+    <div v-if="!expanded" class="polaroid">
+      <div class="polaroid-photo">
+        <img v-if="item.photoSrc" :src="item.photoSrc" draggable="false" />
+        <div v-else class="polaroid-blank" />
+      </div>
+      <span class="polaroid-caption">{{ item.title }}</span>
+    </div>
+
+    <!-- Expanded: full card content -->
+    <CardContent v-else :item="item" @close="expanded = false" />
+
+    <!-- Delete button -->
+    <button
+      v-show="isHovered && !isDragging"
+      class="delete-btn"
+      @pointerdown.stop
+      @click="emit('delete', item.id)"
+      title="Delete"
+    >
+      ×
+    </button>
+  </div>
+</template>
+
+<style scoped>
+.board-item {
+  position: absolute;
+  cursor: grab;
+  user-select: none;
+  filter: drop-shadow(2px 4px 8px rgba(0, 0, 0, 0.35));
+  transition: filter 0.15s;
+}
+
+.board-item.dragging {
+  cursor: grabbing;
+  filter: drop-shadow(4px 8px 16px rgba(0, 0, 0, 0.5));
+}
+
+/* Pushpin */
+.pushpin {
+  position: absolute;
+  top: -8px;
+  left: 50%;
+  transform: translateX(-50%);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  cursor: pointer;
+  z-index: 10;
+  transition: transform 0.15s;
+}
+
+.pushpin:hover,
+.pushpin.connect-mode:hover {
+  transform: translateX(-50%) scale(1.3);
+}
+
+.pin-head {
+  width: 14px;
+  height: 14px;
+  border-radius: 50%;
+  background: radial-gradient(circle at 35% 35%, #e74c3c, #922b21);
+  box-shadow:
+    0 1px 3px rgba(0, 0, 0, 0.5),
+    inset 0 1px 2px rgba(255, 255, 255, 0.3);
+}
+
+.pushpin.connect-mode .pin-head {
+  background: radial-gradient(circle at 35% 35%, #f39c12, #d35400);
+  box-shadow:
+    0 0 6px 2px rgba(243, 156, 18, 0.6),
+    0 1px 3px rgba(0, 0, 0, 0.5);
+}
+
+.pin-needle {
+  width: 2px;
+  height: 8px;
+  background: linear-gradient(to bottom, #888, #555);
+  border-radius: 0 0 1px 1px;
+}
+
+/* Polaroid collapsed view */
+.polaroid {
+  background: #fff;
+  padding: 8px 8px 36px;
+  width: 160px;
+  box-shadow:
+    0 1px 3px rgba(0, 0, 0, 0.2),
+    0 4px 12px rgba(0, 0, 0, 0.15);
+}
+
+.polaroid-photo {
+  width: 100%;
+  height: 144px;
+  overflow: hidden;
+}
+
+.polaroid-photo img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  user-select: none;
+}
+
+.polaroid-blank {
+  width: 100%;
+  height: 100%;
+  background: #e8e4dc;
+  background-image: repeating-linear-gradient(
+    45deg,
+    transparent,
+    transparent 8px,
+    rgba(0, 0, 0, 0.03) 8px,
+    rgba(0, 0, 0, 0.03) 9px
+  );
+}
+
+.polaroid-caption {
+  display: block;
+  margin-top: 10px;
+  font-family: 'Permanent Marker', cursive;
+  font-size: 14px;
+  color: #222;
+  text-align: center;
+  letter-spacing: 0.08em;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+/* Delete button */
+.delete-btn {
+  position: absolute;
+  top: -6px;
+  right: -6px;
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  border: none;
+  background: #c0392b;
+  color: #fff;
+  font-size: 14px;
+  line-height: 1;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.4);
+  z-index: 20;
+  transition: background 0.15s;
+}
+
+.delete-btn:hover {
+  background: #e74c3c;
+}
+</style>
