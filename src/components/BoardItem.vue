@@ -15,6 +15,10 @@ const props = defineProps({
     type: Boolean,
     default: false,
   },
+  zoom: {
+    type: Number,
+    default: 1,
+  },
 })
 
 const emit = defineEmits(['drag', 'pin-click', 'delete', 'hover', 'select'])
@@ -50,7 +54,7 @@ function onPointerMove(e) {
   if (!dragMoved.value && (Math.abs(dx) > 4 || Math.abs(dy) > 4)) {
     dragMoved.value = true
   }
-  emit('drag', props.item.id, dragStart.value.itemX + dx, dragStart.value.itemY + dy)
+  emit('drag', props.item.id, dragStart.value.itemX + dx / props.zoom, dragStart.value.itemY + dy / props.zoom)
 }
 
 function onPointerUp(e) {
