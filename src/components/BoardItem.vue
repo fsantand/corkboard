@@ -112,13 +112,17 @@ function onPointerLeave() {
       <div class="pin-needle" />
     </div>
 
-    <!-- Polaroid view -->
-    <div class="polaroid">
+    <!-- Polaroid view (with photo) -->
+    <div v-if="item.photoSrc" class="polaroid">
       <div class="polaroid-photo">
-        <img v-if="item.photoSrc" :src="item.photoSrc" draggable="false" />
-        <div v-else class="polaroid-blank" />
+        <img :src="item.photoSrc" draggable="false" />
       </div>
       <span class="polaroid-caption">{{ item.title }}</span>
+    </div>
+
+    <!-- Post-it note (no photo) -->
+    <div v-else class="postit">
+      <span class="postit-text">{{ item.title }}</span>
     </div>
 
     <!-- Delete button -->
@@ -222,17 +226,32 @@ function onPointerLeave() {
   user-select: none;
 }
 
-.polaroid-blank {
-  width: 100%;
-  height: 100%;
-  background: #e8e4dc;
-  background-image: repeating-linear-gradient(
-    45deg,
-    transparent,
-    transparent 8px,
-    rgba(0, 0, 0, 0.03) 8px,
-    rgba(0, 0, 0, 0.03) 9px
-  );
+/* Post-it note */
+.postit {
+  background: linear-gradient(160deg, #fef08a 0%, #fde047 100%);
+  width: 160px;
+  height: 160px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 16px;
+  box-sizing: border-box;
+  box-shadow:
+    0 1px 3px rgba(0, 0, 0, 0.2),
+    0 4px 12px rgba(0, 0, 0, 0.15);
+}
+
+.postit-text {
+  font-family: 'Permanent Marker', cursive;
+  font-size: 15px;
+  color: #333;
+  text-align: center;
+  line-height: 1.4;
+  word-break: break-word;
+  overflow: hidden;
+  display: -webkit-box;
+  -webkit-line-clamp: 5;
+  -webkit-box-orient: vertical;
 }
 
 .polaroid-caption {
