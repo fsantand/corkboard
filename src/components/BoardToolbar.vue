@@ -6,12 +6,13 @@ defineProps({
   },
 })
 
-const emit = defineEmits(['add-card', 'cancel-connect'])
+const emit = defineEmits(['add-card', 'cancel-connect', 'center-board'])
 </script>
 
 <template>
   <div class="toolbar">
     <button class="btn" @click="emit('add-card')">+ Card</button>
+    <button class="btn" @click="emit('center-board')">⊙ Center</button>
     <button v-if="connectMode" class="btn btn-cancel" @click="emit('cancel-connect')">
       ✕ Cancel Connect
     </button>

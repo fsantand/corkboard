@@ -74,6 +74,34 @@ function onDelete(id) {
   store.deleteItem(id)
 }
 
+function centerBoard() {
+  if (!boardRef.value) return
+  if (store.items.length === 0) {
+    panX.value = 0
+    panY.value = 0
+    zoom.value = 1
+    return
+  }
+  const CARD_W = 160
+  const CARD_H = 188
+  const PADDING = 80
+  const minX = Math.min(...store.items.map((i) => i.x))
+  const minY = Math.min(...store.items.map((i) => i.y))
+  const maxX = Math.max(...store.items.map((i) => i.x + CARD_W))
+  const maxY = Math.max(...store.items.map((i) => i.y + CARD_H))
+  const contentW = maxX - minX
+  const contentH = maxY - minY
+  const viewW = boardRef.value.clientWidth
+  const viewH = boardRef.value.clientHeight
+  const newZoom = Math.max(
+    ZOOM_MIN,
+    Math.min(ZOOM_MAX, Math.min((viewW - PADDING * 2) / contentW, (viewH - PADDING * 2) / contentH)),
+  )
+  panX.value = (viewW - contentW * newZoom) / 2 - minX * newZoom
+  panY.value = (viewH - contentH * newZoom) / 2 - minY * newZoom
+  zoom.value = newZoom
+}
+
 function onKeydown(e) {
   if (e.key === 'Escape') store.cancelConnect()
 }
@@ -166,6 +194,7 @@ onUnmounted(() => {
       :connect-mode="store.connectMode"
       @add-card="store.addItem"
       @cancel-connect="store.cancelConnect"
+      @center-board="centerBoard"
     />
 
     <!-- Connect mode hint -->
