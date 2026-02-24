@@ -75,7 +75,7 @@ function onPhotoConfirm(src) {
   right: 0;
   top: 0;
   bottom: 0;
-  width: 280px;
+  width: 30vw;
   background: #f5f0e8;
   border-left: 1px solid #d4c9b0;
   box-shadow: -4px 0 20px rgba(0, 0, 0, 0.15);

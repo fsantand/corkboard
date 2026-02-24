@@ -155,7 +155,7 @@ function onPointerUp() {
 .minimap {
   position: fixed;
   bottom: 20px;
-  right: 20px;
+  left: 20px;
   width: 200px;
   height: 150px;
   background: rgba(20, 15, 10, 0.72);
