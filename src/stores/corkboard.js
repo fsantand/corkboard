@@ -126,6 +126,22 @@ export const useCorkboardStore = defineStore('corkboard', () => {
     connections.value = connections.value.filter((c) => c.id !== id)
   }
 
+  function importBoard(data) {
+    items.value = (data.items ?? []).map((i) => ({
+      id: i.id,
+      x: i.x,
+      y: i.y,
+      rotation: i.rotation,
+      zIndex: i.zIndex,
+      title: i.title ?? '',
+      description: i.description ?? '',
+      photoSrc: i.photoSrc ?? null,
+      width: i.width ?? 200,
+    }))
+    connections.value = data.connections ?? []
+    zCounter = Math.max(0, ...items.value.map((i) => i.zIndex ?? 0))
+  }
+
   return {
     items,
     connections,
@@ -139,5 +155,6 @@ export const useCorkboardStore = defineStore('corkboard', () => {
     finishConnect,
     cancelConnect,
     removeConnection,
+    importBoard,
   }
 })
