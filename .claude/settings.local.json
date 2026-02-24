@@ -1,8 +1,9 @@
 {
-  "prefersReducedMotion": false,
   "permissions": {
     "allow": [
-      "Bash(npx eslint:*)"
+      "Bash(npx eslint:*)",
+      "Bash(npm run:*)"
     ]
-  }
+  },
+  "prefersReducedMotion": false
 }
