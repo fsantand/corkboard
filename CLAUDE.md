@@ -53,9 +53,6 @@ src/
       IconEcosystem.vue
       IconSupport.vue
       IconTooling.vue
-    HelloWorld.vue             # Scaffolding (unused)
-    TheWelcome.vue             # Scaffolding (unused)
-    WelcomeItem.vue            # Scaffolding (unused)
 public/
   favicon.ico
 index.html                     # HTML entry point
