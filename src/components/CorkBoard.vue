@@ -85,7 +85,7 @@ function onDelete(id) {
 function onAddCard() {
   const x = (viewW.value / 2 - panX.value) / zoom.value
   const y = (viewH.value / 2 - panY.value) / zoom.value
-  store.addItem(x, y)
+  selectedItemId.value = store.addItem(x, y)
 }
 
 function centerBoard() {

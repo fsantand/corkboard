@@ -1,5 +1,5 @@
 <script setup>
-import { ref } from 'vue'
+import { ref, watch, nextTick } from 'vue'
 import { useCorkboardStore } from '@/stores/corkboard'
 import AddPhotoModal from './AddPhotoModal.vue'
 import { CATEGORIES } from '@/constants/categories'
@@ -14,7 +14,16 @@ const props = defineProps({
 const store = useCorkboardStore()
 const collapsed = ref(false)
 const showPhotoModal = ref(false)
+const titleInputRef = ref(null)
 
+watch(
+  () => props.item?.id,
+  (newId) => {
+    if (newId && !props.item.title) {
+      nextTick(() => titleInputRef.value?.focus())
+    }
+  },
+)
 
 function onPhotoConfirm(src) {
   store.updateItem(props.item.id, { photoSrc: src })
@@ -41,6 +50,7 @@ function onPhotoConfirm(src) {
 
         <div class="aside-fields">
           <input
+            ref="titleInputRef"
             class="aside-title"
             :value="item.title"
             @input="store.updateItem(item.id, { title: $event.target.value })"
