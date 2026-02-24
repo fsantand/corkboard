@@ -12,9 +12,13 @@ const props = defineProps({
     type: Boolean,
     default: false,
   },
+  dimmed: {
+    type: Boolean,
+    default: false,
+  },
 })
 
-const emit = defineEmits(['drag', 'pin-click', 'delete'])
+const emit = defineEmits(['drag', 'pin-click', 'delete', 'hover'])
 
 const store = useCorkboardStore()
 
@@ -64,6 +68,16 @@ function onPinClick(e) {
   e.stopPropagation()
   emit('pin-click', props.item.id)
 }
+
+function onPointerEnter() {
+  isHovered.value = true
+  emit('hover', props.item.id)
+}
+
+function onPointerLeave() {
+  isHovered.value = false
+  emit('hover', null)
+}
 </script>
 
 <template>
@@ -72,6 +86,7 @@ function onPinClick(e) {
     :class="{
       dragging: isDragging,
       'connect-source': connectMode && item.id === $props.item.id,
+      dimmed: dimmed,
     }"
     :style="{
       left: item.x + 'px',
@@ -82,8 +97,8 @@ function onPinClick(e) {
     @pointerdown="onPointerDown"
     @pointermove="onPointerMove"
     @pointerup="onPointerUp"
-    @pointerenter="isHovered = true"
-    @pointerleave="isHovered = false"
+    @pointerenter="onPointerEnter"
+    @pointerleave="onPointerLeave"
   >
     <!-- Pushpin -->
     <div
@@ -126,12 +141,19 @@ function onPinClick(e) {
   cursor: grab;
   user-select: none;
   filter: drop-shadow(2px 4px 8px rgba(0, 0, 0, 0.35));
-  transition: filter 0.15s;
+  transition:
+    filter 0.15s,
+    opacity 0.2s;
 }
 
 .board-item.dragging {
   cursor: grabbing;
   filter: drop-shadow(4px 8px 16px rgba(0, 0, 0, 0.5));
+}
+
+.board-item.dimmed {
+  opacity: 0.2;
+  pointer-events: none;
 }
 
 /* Pushpin */

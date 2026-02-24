@@ -1,5 +1,5 @@
 <script setup>
-import { ref, onMounted, onUnmounted } from 'vue'
+import { ref, computed, onMounted, onUnmounted } from 'vue'
 import { useCorkboardStore } from '@/stores/corkboard'
 import BoardItem from './BoardItem.vue'
 import StringLayer from './StringLayer.vue'
@@ -9,6 +9,17 @@ const store = useCorkboardStore()
 
 const boardRef = ref(null)
 const pointerPos = ref({ x: 0, y: 0 })
+const hoveredItemId = ref(null)
+
+const dimmedIds = computed(() => {
+  if (!hoveredItemId.value) return new Set()
+  const lit = new Set([hoveredItemId.value])
+  for (const c of store.connections) {
+    if (c.fromId === hoveredItemId.value) lit.add(c.toId)
+    if (c.toId === hoveredItemId.value) lit.add(c.fromId)
+  }
+  return new Set(store.items.map((i) => i.id).filter((id) => !lit.has(id)))
+})
 
 function onPointerMove(e) {
   if (!boardRef.value) return
@@ -34,6 +45,10 @@ function onPinClick(id) {
   } else {
     store.finishConnect(id)
   }
+}
+
+function onItemHover(id) {
+  hoveredItemId.value = id
 }
 
 function onKeydown(e) {
@@ -62,6 +77,7 @@ onUnmounted(() => {
       :connect-mode="store.connectMode"
       :connect-from="store.connectFrom"
       :pointer-pos="pointerPos"
+      :hovered-item-id="hoveredItemId"
     />
 
     <BoardItem
@@ -69,9 +85,11 @@ onUnmounted(() => {
       :key="item.id"
       :item="item"
       :connect-mode="store.connectMode"
+      :dimmed="dimmedIds.has(item.id)"
       @drag="onDrag"
       @pin-click="onPinClick"
       @delete="store.deleteItem"
+      @hover="onItemHover"
     />
 
     <BoardToolbar

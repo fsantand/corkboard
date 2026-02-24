@@ -22,6 +22,10 @@ const props = defineProps({
     type: Object,
     default: () => ({ x: 0, y: 0 }),
   },
+  hoveredItemId: {
+    type: String,
+    default: null,
+  },
 })
 
 function pinCenter(item) {
@@ -56,6 +60,10 @@ const svgPaths = computed(() => {
     .map((c) => ({
       id: c.id,
       d: stringPath(pinCenter(itemMap.value[c.fromId]), pinCenter(itemMap.value[c.toId])),
+      dimmed:
+        !!props.hoveredItemId &&
+        c.fromId !== props.hoveredItemId &&
+        c.toId !== props.hoveredItemId,
     }))
 })
 
@@ -73,6 +81,7 @@ const previewPath = computed(() => {
       v-for="p in svgPaths"
       :key="p.id"
       :d="p.d"
+      :class="{ 'string-path': true, dimmed: p.dimmed }"
       stroke="#c0392b"
       stroke-width="2"
       fill="none"
@@ -92,6 +101,14 @@ const previewPath = computed(() => {
 </template>
 
 <style scoped>
+.string-path {
+  transition: opacity 0.2s;
+}
+
+.string-path.dimmed {
+  opacity: 0.1;
+}
+
 .string-layer {
   position: absolute;
   top: 0;
