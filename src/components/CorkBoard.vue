@@ -5,10 +5,18 @@ import BoardItem from './BoardItem.vue'
 import StringLayer from './StringLayer.vue'
 import BoardToolbar from './BoardToolbar.vue'
 import ItemAside from './ItemAside.vue'
+import MiniMap from './MiniMap.vue'
 
 const store = useCorkboardStore()
 
 const boardRef = ref(null)
+const viewW = ref(window.innerWidth)
+const viewH = ref(window.innerHeight)
+
+function onResize() {
+  viewW.value = window.innerWidth
+  viewH.value = window.innerHeight
+}
 const pointerPos = ref({ x: 0, y: 0 })
 const hoveredItemId = ref(null)
 const selectedItemId = ref(null)
@@ -91,14 +99,14 @@ function centerBoard() {
   const maxY = Math.max(...store.items.map((i) => i.y + CARD_H))
   const contentW = maxX - minX
   const contentH = maxY - minY
-  const viewW = boardRef.value.clientWidth
-  const viewH = boardRef.value.clientHeight
+  const boardW = boardRef.value.clientWidth
+  const boardH = boardRef.value.clientHeight
   const newZoom = Math.max(
     ZOOM_MIN,
-    Math.min(ZOOM_MAX, Math.min((viewW - PADDING * 2) / contentW, (viewH - PADDING * 2) / contentH)),
+    Math.min(ZOOM_MAX, Math.min((boardW - PADDING * 2) / contentW, (boardH - PADDING * 2) / contentH)),
   )
-  panX.value = (viewW - contentW * newZoom) / 2 - minX * newZoom
-  panY.value = (viewH - contentH * newZoom) / 2 - minY * newZoom
+  panX.value = (boardW - contentW * newZoom) / 2 - minX * newZoom
+  panY.value = (boardH - contentH * newZoom) / 2 - minY * newZoom
   zoom.value = newZoom
 }
 
@@ -124,6 +132,11 @@ function onMouseUp(e) {
   if (e.button === 1) isPanning.value = false
 }
 
+function onMinimapPan(newPanX, newPanY) {
+  panX.value = newPanX
+  panY.value = newPanY
+}
+
 function onWheel(e) {
   e.preventDefault()
   const rect = boardRef.value.getBoundingClientRect()
@@ -142,6 +155,7 @@ onMounted(() => {
   boardRef.value.addEventListener('wheel', onWheel, { passive: false })
   document.addEventListener('mousemove', onPanMove)
   document.addEventListener('mouseup', onMouseUp)
+  window.addEventListener('resize', onResize)
 })
 
 onUnmounted(() => {
@@ -150,6 +164,7 @@ onUnmounted(() => {
   boardRef.value?.removeEventListener('wheel', onWheel)
   document.removeEventListener('mousemove', onPanMove)
   document.removeEventListener('mouseup', onMouseUp)
+  window.removeEventListener('resize', onResize)
 })
 </script>
 
@@ -203,6 +218,17 @@ onUnmounted(() => {
     </div>
 
     <ItemAside :item="activeItem" />
+
+    <MiniMap
+      :items="store.items"
+      :connections="store.connections"
+      :pan-x="panX"
+      :pan-y="panY"
+      :zoom="zoom"
+      :view-width="viewW"
+      :view-height="viewH"
+      @update-pan="onMinimapPan"
+    />
   </div>
 </template>
 
