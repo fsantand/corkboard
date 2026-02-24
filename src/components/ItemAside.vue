@@ -67,9 +67,18 @@ function onPhotoConfirm(src) {
             placeholder="Add a description..."
           />
 
-          <button class="add-photo-btn" @click="showPhotoModal = true">
-            {{ item.photoSrc ? '↺ Change Photo' : '+ Add Photo' }}
-          </button>
+          <div class="photo-actions">
+            <button class="add-photo-btn" @click="showPhotoModal = true">
+              {{ item.photoSrc ? '↺ Change Photo' : '+ Add Photo' }}
+            </button>
+            <button
+              v-if="item.photoSrc"
+              class="remove-photo-btn"
+              @click="store.updateItem(item.id, { photoSrc: null })"
+            >
+              ✕ Remove Photo
+            </button>
+          </div>
         </div>
       </template>
 
@@ -213,10 +222,16 @@ function onPhotoConfirm(src) {
   color: #bbb;
 }
 
-.add-photo-btn {
+.photo-actions {
+  display: flex;
+  gap: 12px;
+  align-items: center;
+}
+
+.add-photo-btn,
+.remove-photo-btn {
   border: none;
   background: none;
-  color: #7a6e5a;
   font-size: 12px;
   cursor: pointer;
   padding: 2px 0;
@@ -225,8 +240,20 @@ function onPhotoConfirm(src) {
   text-align: left;
 }
 
+.add-photo-btn {
+  color: #7a6e5a;
+}
+
 .add-photo-btn:hover {
   color: #3d3020;
+}
+
+.remove-photo-btn {
+  color: #b0392b;
+}
+
+.remove-photo-btn:hover {
+  color: #e74c3c;
 }
 
 .aside-empty {
