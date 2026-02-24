@@ -4,12 +4,19 @@ import { useCorkboardStore } from '@/stores/corkboard'
 import BoardItem from './BoardItem.vue'
 import StringLayer from './StringLayer.vue'
 import BoardToolbar from './BoardToolbar.vue'
+import ItemAside from './ItemAside.vue'
 
 const store = useCorkboardStore()
 
 const boardRef = ref(null)
 const pointerPos = ref({ x: 0, y: 0 })
 const hoveredItemId = ref(null)
+const selectedItemId = ref(null)
+
+const activeItem = computed(() => {
+  const id = selectedItemId.value ?? hoveredItemId.value
+  return id ? (store.items.find((i) => i.id === id) ?? null) : null
+})
 
 const dimmedIds = computed(() => {
   if (!hoveredItemId.value) return new Set()
@@ -51,6 +58,10 @@ function onItemHover(id) {
   hoveredItemId.value = id
 }
 
+function onItemSelect(id) {
+  selectedItemId.value = selectedItemId.value === id ? null : id
+}
+
 function onKeydown(e) {
   if (e.key === 'Escape') store.cancelConnect()
 }
@@ -78,6 +89,7 @@ onUnmounted(() => {
       :connect-from="store.connectFrom"
       :pointer-pos="pointerPos"
       :hovered-item-id="hoveredItemId"
+      @remove-connection="store.removeConnection"
     />
 
     <BoardItem
@@ -90,6 +102,7 @@ onUnmounted(() => {
       @pin-click="onPinClick"
       @delete="store.deleteItem"
       @hover="onItemHover"
+      @select="onItemSelect"
     />
 
     <BoardToolbar
@@ -102,6 +115,8 @@ onUnmounted(() => {
     <div v-if="store.connectMode" class="connect-hint">
       Click another pin to connect, or press Esc to cancel
     </div>
+
+    <ItemAside :item="activeItem" />
   </div>
 </template>
 
@@ -111,31 +126,9 @@ onUnmounted(() => {
   inset: 0;
   overflow: hidden;
 
-  /* Cork base color */
-  background-color: #c8a96e;
-
-  /* Layered cork grain texture */
-  background-image:
-    radial-gradient(ellipse 2px 3px at 15% 25%, rgba(90, 55, 10, 0.25) 0%, transparent 100%),
-    radial-gradient(ellipse 3px 2px at 42% 68%, rgba(90, 55, 10, 0.2) 0%, transparent 100%),
-    radial-gradient(ellipse 2px 4px at 73% 12%, rgba(90, 55, 10, 0.22) 0%, transparent 100%),
-    radial-gradient(ellipse 3px 2px at 88% 55%, rgba(90, 55, 10, 0.18) 0%, transparent 100%),
-    radial-gradient(ellipse 2px 3px at 60% 80%, rgba(90, 55, 10, 0.25) 0%, transparent 100%),
-    radial-gradient(ellipse 4px 2px at 30% 90%, rgba(90, 55, 10, 0.2) 0%, transparent 100%),
-    radial-gradient(ellipse 2px 3px at 5% 50%, rgba(90, 55, 10, 0.18) 0%, transparent 100%),
-    radial-gradient(ellipse 3px 2px at 95% 20%, rgba(90, 55, 10, 0.22) 0%, transparent 100%),
-    radial-gradient(circle 4px at 20% 40%, rgba(120, 70, 15, 0.3) 0%, transparent 70%),
-    radial-gradient(circle 3px at 55% 30%, rgba(120, 70, 15, 0.25) 0%, transparent 70%),
-    radial-gradient(circle 5px at 80% 70%, rgba(120, 70, 15, 0.2) 0%, transparent 70%),
-    radial-gradient(circle 4px at 10% 75%, rgba(120, 70, 15, 0.28) 0%, transparent 70%),
-    radial-gradient(circle 3px at 70% 50%, rgba(120, 70, 15, 0.22) 0%, transparent 70%),
-    radial-gradient(circle 2px at 35% 55%, rgba(220, 180, 100, 0.4) 0%, transparent 100%),
-    radial-gradient(circle 2px at 65% 20%, rgba(220, 180, 100, 0.35) 0%, transparent 100%),
-    radial-gradient(circle 2px at 90% 35%, rgba(220, 180, 100, 0.3) 0%, transparent 100%),
-    radial-gradient(circle 2px at 48% 85%, rgba(220, 180, 100, 0.38) 0%, transparent 100%),
-    linear-gradient(135deg, #d4a96a 0%, #c09050 40%, #b8884a 70%, #c8a060 100%);
-
-  box-shadow: inset 0 0 80px rgba(80, 40, 0, 0.45);
+  background-image: url('@/assets/background.png');
+  background-repeat: repeat;
+  background-size: auto;
 }
 
 .cork-board.connect-mode {

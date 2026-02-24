@@ -1,6 +1,8 @@
 <script setup>
 import { computed } from 'vue'
 
+const emit = defineEmits(['remove-connection'])
+
 const props = defineProps({
   items: {
     type: Array,
@@ -77,6 +79,18 @@ const previewPath = computed(() => {
 
 <template>
   <svg class="string-layer" xmlns="http://www.w3.org/2000/svg">
+    <!-- Wide invisible hitbox for right-click detection -->
+    <path
+      v-for="p in svgPaths"
+      :key="'hit-' + p.id"
+      :d="p.d"
+      stroke="transparent"
+      stroke-width="12"
+      fill="none"
+      stroke-linecap="round"
+      class="string-hitbox"
+      @contextmenu.prevent="emit('remove-connection', p.id)"
+    />
     <path
       v-for="p in svgPaths"
       :key="p.id"
@@ -101,6 +115,11 @@ const previewPath = computed(() => {
 </template>
 
 <style scoped>
+.string-hitbox {
+  pointer-events: stroke;
+  cursor: context-menu;
+}
+
 .string-path {
   transition: opacity 0.2s;
 }

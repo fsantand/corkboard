@@ -1,6 +1,5 @@
 <script setup>
 import { ref } from 'vue'
-import CardContent from './CardContent.vue'
 import { useCorkboardStore } from '@/stores/corkboard'
 
 const props = defineProps({
@@ -18,13 +17,12 @@ const props = defineProps({
   },
 })
 
-const emit = defineEmits(['drag', 'pin-click', 'delete', 'hover'])
+const emit = defineEmits(['drag', 'pin-click', 'delete', 'hover', 'select'])
 
 const store = useCorkboardStore()
 
 const isDragging = ref(false)
 const isHovered = ref(false)
-const expanded = ref(false)
 const dragMoved = ref(false)
 const dragStart = ref({ ptrX: 0, ptrY: 0, itemX: 0, itemY: 0 })
 
@@ -60,7 +58,7 @@ function onPointerUp(e) {
   isDragging.value = false
   e.currentTarget.releasePointerCapture(e.pointerId)
   if (!dragMoved.value) {
-    expanded.value = !expanded.value
+    emit('select', props.item.id)
   }
 }
 
@@ -110,17 +108,14 @@ function onPointerLeave() {
       <div class="pin-needle" />
     </div>
 
-    <!-- Collapsed: polaroid view -->
-    <div v-if="!expanded" class="polaroid">
+    <!-- Polaroid view -->
+    <div class="polaroid">
       <div class="polaroid-photo">
         <img v-if="item.photoSrc" :src="item.photoSrc" draggable="false" />
         <div v-else class="polaroid-blank" />
       </div>
       <span class="polaroid-caption">{{ item.title }}</span>
     </div>
-
-    <!-- Expanded: full card content -->
-    <CardContent v-else :item="item" @close="expanded = false" />
 
     <!-- Delete button -->
     <button
