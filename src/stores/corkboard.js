@@ -60,8 +60,8 @@ export const useCorkboardStore = defineStore('corkboard', () => {
     }
   }
 
-  function addItem() {
-    const pos = _spawnPosition()
+  function addItem(x, y) {
+    const pos = x !== undefined && y !== undefined ? { x, y } : _spawnPosition()
     items.value.push({
       id: crypto.randomUUID(),
       x: pos.x,

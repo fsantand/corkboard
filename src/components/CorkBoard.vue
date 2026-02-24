@@ -82,6 +82,12 @@ function onDelete(id) {
   store.deleteItem(id)
 }
 
+function onAddCard() {
+  const x = (viewW.value / 2 - panX.value) / zoom.value
+  const y = (viewH.value / 2 - panY.value) / zoom.value
+  store.addItem(x, y)
+}
+
 function centerBoard() {
   if (!boardRef.value) return
   if (store.items.length === 0) {
@@ -207,7 +213,7 @@ onUnmounted(() => {
 
     <BoardToolbar
       :connect-mode="store.connectMode"
-      @add-card="store.addItem"
+      @add-card="onAddCard"
       @cancel-connect="store.cancelConnect"
       @center-board="centerBoard"
     />
