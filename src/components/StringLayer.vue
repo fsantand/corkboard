@@ -97,7 +97,7 @@ const previewPath = computed(() => {
       :d="p.d"
       :class="{ 'string-path': true, dimmed: p.dimmed }"
       stroke="#c0392b"
-      stroke-width="2"
+      stroke-width="4"
       fill="none"
       stroke-linecap="round"
     />

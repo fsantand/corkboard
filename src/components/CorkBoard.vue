@@ -188,6 +188,15 @@ onUnmounted(() => {
   background-size: auto;
 }
 
+.cork-board::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.50);
+  pointer-events: none;
+  z-index: 0;
+}
+
 .cork-board.connect-mode {
   cursor: crosshair;
 }
@@ -203,6 +212,7 @@ onUnmounted(() => {
   width: 100vw;
   height: 100vh;
   transform-origin: 0 0;
+  z-index: 1;
 }
 
 .connect-hint {
