@@ -108,7 +108,7 @@ function onPointerLeave() {
       :class="{ 'connect-mode': connectMode }"
       @pointerdown.stop="onPinClick"
     >
-      <div class="pin-head" />
+      <div class="pin-head" :class="item.category ? `category-${item.category}` : ''" />
       <div class="pin-needle" />
     </div>
 
@@ -121,7 +121,7 @@ function onPointerLeave() {
     </div>
 
     <!-- Post-it note (no photo) -->
-    <div v-else class="postit">
+    <div v-else class="postit" :class="item.category ? `category-${item.category}` : ''">
       <span class="postit-text">{{ item.title }}</span>
     </div>
 
@@ -204,7 +204,7 @@ function onPointerLeave() {
 
 /* Polaroid collapsed view */
 .polaroid {
-  background: #fff;
+  background: #ededed;
   padding: 8px 8px 36px;
   width: 160px;
   box-shadow:
@@ -291,5 +291,43 @@ function onPointerLeave() {
 
 .delete-btn:hover {
   background: #e74c3c;
+}
+
+/* Post-it category colors */
+.postit.category-person {
+  background: linear-gradient(160deg, #85c1e9 0%, #2471a3 100%);
+}
+.postit.category-place {
+  background: linear-gradient(160deg, #82e0aa 0%, #1e8449 100%);
+}
+.postit.category-evidence {
+  background: linear-gradient(160deg, #c39bd3 0%, #7d3c98 100%);
+}
+.postit.category-lead {
+  background: linear-gradient(160deg, #f0b27a 0%, #ca6f1e 100%);
+}
+.postit.category-organization {
+  background: linear-gradient(160deg, #d44a4a 0%, #a10d0d 100%);
+}
+
+.postit[class*='category-'] .postit-text {
+  color: #fff;
+}
+
+/* Pin-head category colors */
+.pin-head.category-person {
+  background: radial-gradient(circle at 35% 35%, #3498db, #1a5276);
+}
+.pin-head.category-place {
+  background: radial-gradient(circle at 35% 35%, #27ae60, #1a5e38);
+}
+.pin-head.category-evidence {
+  background: radial-gradient(circle at 35% 35%, #9b59b6, #6c3483);
+}
+.pin-head.category-lead {
+  background: radial-gradient(circle at 35% 35%, #e67e22, #9a5e1a);
+}
+.pin-head.category-organization {
+  background: radial-gradient(circle at 35% 35%, #d44a4a, #a10d0d);
 }
 </style>

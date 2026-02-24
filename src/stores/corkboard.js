@@ -25,10 +25,11 @@ export const useCorkboardStore = defineStore('corkboard', () => {
         description: i.description ?? '',
         photoSrc: i.photoSrc ?? null,
         width: i.width ?? 200,
+        category: i.category ?? null,
       }))
       connections.value = parsed.connections ?? []
       zCounter = Math.max(0, ...items.value.map((i) => i.zIndex ?? 0))
-    } catch (_) {
+    } catch {
       // ignore corrupt data
     }
   }
@@ -72,6 +73,7 @@ export const useCorkboardStore = defineStore('corkboard', () => {
       description: '',
       photoSrc: null,
       width: 200,
+      category: null,
     })
   }
 
@@ -137,6 +139,7 @@ export const useCorkboardStore = defineStore('corkboard', () => {
       description: i.description ?? '',
       photoSrc: i.photoSrc ?? null,
       width: i.width ?? 200,
+      category: i.category ?? null,
     }))
     connections.value = data.connections ?? []
     zCounter = Math.max(0, ...items.value.map((i) => i.zIndex ?? 0))

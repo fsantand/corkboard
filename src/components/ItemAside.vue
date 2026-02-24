@@ -14,6 +14,14 @@ const store = useCorkboardStore()
 const collapsed = ref(false)
 const showPhotoModal = ref(false)
 
+const categories = [
+  { value: 'person', label: 'Person' },
+  { value: 'organization', label: 'Organization' },
+  { value: 'place', label: 'Place' },
+  { value: 'evidence', label: 'Evidence' },
+  { value: 'lead', label: 'Lead' },
+]
+
 function onPhotoConfirm(src) {
   store.updateItem(props.item.id, { photoSrc: src })
   showPhotoModal.value = false
@@ -44,6 +52,18 @@ function onPhotoConfirm(src) {
             @input="store.updateItem(item.id, { title: $event.target.value })"
             placeholder="Title..."
           />
+
+          <div class="category-picker">
+            <button
+              v-for="cat in categories"
+              :key="cat.value"
+              class="cat-btn"
+              :class="[`cat-${cat.value}`, { active: item.category === cat.value }]"
+              @click="store.updateItem(item.id, { category: item.category === cat.value ? null : cat.value })"
+            >
+              {{ cat.label }}
+            </button>
+          </div>
 
           <textarea
             class="aside-description"
@@ -224,5 +244,62 @@ function onPhotoConfirm(src) {
   font-size: 13px;
   padding: 24px;
   line-height: 1.6;
+}
+
+.category-picker {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+}
+
+.cat-btn {
+  flex: 1;
+  min-width: 60px;
+  border: 2px solid transparent;
+  border-radius: 20px;
+  padding: 4px 10px;
+  font-size: 12px;
+  font-weight: 600;
+  cursor: pointer;
+  background: #e0d8c8;
+  color: #7a6e5a;
+  transition:
+    background 0.15s,
+    color 0.15s,
+    border-color 0.15s;
+}
+
+.cat-btn:hover {
+  opacity: 0.85;
+}
+
+.cat-btn.cat-person.active {
+  background: #2471a3;
+  color: #fff;
+  border-color: #1a5276;
+}
+
+.cat-btn.cat-place.active {
+  background: #1e8449;
+  color: #fff;
+  border-color: #196f3d;
+}
+
+.cat-btn.cat-evidence.active {
+  background: #7d3c98;
+  color: #fff;
+  border-color: #6c3483;
+}
+
+.cat-btn.cat-lead.active {
+  background: #ca6f1e;
+  color: #fff;
+  border-color: #b9770e;
+}
+
+.cat-btn.cat-organization.active {
+  background: #a10d0d;
+  color: #fff;
+  border-color: #7a0505;
 }
 </style>
