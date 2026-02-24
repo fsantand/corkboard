@@ -2,6 +2,7 @@
 import { ref } from 'vue'
 import { useCorkboardStore } from '@/stores/corkboard'
 import AddPhotoModal from './AddPhotoModal.vue'
+import { CATEGORIES } from '@/constants/categories'
 
 const props = defineProps({
   item: {
@@ -14,13 +15,6 @@ const store = useCorkboardStore()
 const collapsed = ref(false)
 const showPhotoModal = ref(false)
 
-const categories = [
-  { value: 'person', label: 'Person' },
-  { value: 'organization', label: 'Organization' },
-  { value: 'place', label: 'Place' },
-  { value: 'evidence', label: 'Evidence' },
-  { value: 'lead', label: 'Lead' },
-]
 
 function onPhotoConfirm(src) {
   store.updateItem(props.item.id, { photoSrc: src })
@@ -55,11 +49,12 @@ function onPhotoConfirm(src) {
 
           <div class="category-picker">
             <button
-              v-for="cat in categories"
-              :key="cat.value"
+              v-for="cat in CATEGORIES"
+              :key="cat.id"
               class="cat-btn"
-              :class="[`cat-${cat.value}`, { active: item.category === cat.value }]"
-              @click="store.updateItem(item.id, { category: item.category === cat.value ? null : cat.value })"
+              :class="{ active: item.category === cat.id }"
+              :style="{ '--cat-primary': cat.colorPrimary, '--cat-secondary': cat.colorSecondary }"
+              @click="store.updateItem(item.id, { category: item.category === cat.id ? null : cat.id })"
             >
               {{ cat.label }}
             </button>
@@ -273,33 +268,9 @@ function onPhotoConfirm(src) {
   opacity: 0.85;
 }
 
-.cat-btn.cat-person.active {
-  background: #2471a3;
+.cat-btn.active {
+  background: var(--cat-secondary);
   color: #fff;
-  border-color: #1a5276;
-}
-
-.cat-btn.cat-place.active {
-  background: #1e8449;
-  color: #fff;
-  border-color: #196f3d;
-}
-
-.cat-btn.cat-evidence.active {
-  background: #7d3c98;
-  color: #fff;
-  border-color: #6c3483;
-}
-
-.cat-btn.cat-lead.active {
-  background: #ca6f1e;
-  color: #fff;
-  border-color: #b9770e;
-}
-
-.cat-btn.cat-organization.active {
-  background: #a10d0d;
-  color: #fff;
-  border-color: #7a0505;
+  border-color: var(--cat-secondary);
 }
 </style>
