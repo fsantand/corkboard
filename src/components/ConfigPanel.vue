@@ -3,6 +3,16 @@ import { ref } from 'vue'
 import { useCorkboardStore } from '@/stores/corkboard'
 import EmojiPicker from './EmojiPicker.vue'
 
+const templateModules = import.meta.glob('@/assets/templates/*.json', { eager: true })
+const templates = Object.entries(templateModules).map(([path, module]) => {
+  const filename = path.split('/').pop().replace(/\.json$/, '')
+  const label = filename
+    .replace(/_template$/i, '')
+    .replace(/_/g, ' ')
+    .replace(/\b\w/g, (c) => c.toUpperCase())
+  return { label, data: module.default ?? module }
+})
+
 defineProps({
   open: {
     type: Boolean,
@@ -81,6 +91,17 @@ function importBoard() {
     reader.readAsText(file)
   }
   input.click()
+}
+
+function onLoadTemplate(e) {
+  const label = e.target.value
+  if (!label) return
+  e.target.value = ''
+  const tpl = templates.find((t) => t.label === label)
+  if (!tpl) return
+  if (window.confirm(`Load "${label}" template? This will replace your current board.`)) {
+    store.importBoard(tpl.data)
+  }
 }
 
 function onClearBoard() {
@@ -268,6 +289,10 @@ async function exportBoard() {
           <button class="btn" @click="importBoard">↑ Import</button>
           <button class="btn" @click="exportBoard">↓ Export</button>
         </div>
+        <select class="template-select" @change="onLoadTemplate">
+          <option value="">Load template…</option>
+          <option v-for="t in templates" :key="t.label" :value="t.label">{{ t.label }}</option>
+        </select>
         <button class="btn btn--danger" @click="onClearBoard">✕ Clear Board</button>
       </section>
     </div>
@@ -551,6 +576,24 @@ input[type='color'] {
 }
 
 /* Board data */
+.template-select {
+  width: 100%;
+  margin-top: 8px;
+  padding: 7px 8px;
+  border: 1px solid #d4c9b0;
+  border-radius: 4px;
+  background: #fff;
+  font-size: 13px;
+  color: #2c2c2c;
+  cursor: pointer;
+  outline: none;
+  transition: border-color 0.15s;
+}
+
+.template-select:focus {
+  border-color: #c0a880;
+}
+
 .data-btns {
   display: flex;
   gap: 8px;
