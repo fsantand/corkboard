@@ -1,0 +1,503 @@
+{
+  "items": [
+    {
+      "id": "101d71f1-0490-47be-a3b5-42b082e3a76d",
+      "x": 712.5,
+      "y": 292.8495633824965,
+      "rotation": 5.3,
+      "zIndex": 1831,
+      "title": "Vampire Elders",
+      "description": "",
+      "photoSrc": null,
+      "width": 200,
+      "category": "lead"
+    },
+    {
+      "id": "f1c4dc72-44ee-421d-83b3-7a9aae9616c2",
+      "x": 506.25178429553347,
+      "y": 607.1792992661879,
+      "rotation": -3.5,
+      "zIndex": 693,
+      "title": "Blood cult",
+      "description": "",
+      "photoSrc": null,
+      "width": 200,
+      "category": "organization"
+    },
+    {
+      "id": "300867f5-9ec2-413c-b01b-413610b3c3cb",
+      "x": 872.306366758703,
+      "y": 618.1720349294003,
+      "rotation": 3.2,
+      "zIndex": 1802,
+      "title": "Odessa MAfiya",
+      "description": "",
+      "photoSrc": null,
+      "width": 200,
+      "category": "person"
+    },
+    {
+      "id": "6637db76-51a6-4baa-87e9-3b5c6fb0832f",
+      "x": 1114.2741571823012,
+      "y": 948.1182270411018,
+      "rotation": 3.4,
+      "zIndex": 1862,
+      "title": "Banque Du Odessa",
+      "description": "",
+      "photoSrc": null,
+      "width": 200,
+      "category": "place"
+    },
+    {
+      "id": "00178e82-24cf-427b-b343-f6a7036df363",
+      "x": 684.8762794352023,
+      "y": 955.3440698588006,
+      "rotation": 5.6,
+      "zIndex": 1777,
+      "title": "A. Kirchow",
+      "description": "",
+      "photoSrc": null,
+      "width": 200,
+      "category": "person"
+    },
+    {
+      "id": "238f2df4-fc0e-450d-86de-433253c6f20e",
+      "x": 276.5,
+      "y": 959,
+      "rotation": -0.7,
+      "zIndex": 540,
+      "title": "EU Office of Culture Affairs",
+      "description": "",
+      "photoSrc": null,
+      "width": 200,
+      "category": "organization"
+    },
+    {
+      "id": "cb1a7d33-f1ab-44fe-8704-e544bd6c4b41",
+      "x": -4.1006356595129745,
+      "y": 1275.6106749602106,
+      "rotation": 2.3,
+      "zIndex": 2747,
+      "title": "Italian Ministry of Culture",
+      "description": "",
+      "photoSrc": null,
+      "width": 200,
+      "category": "organization"
+    },
+    {
+      "id": "e6ae83b7-21a5-40fa-834e-a9b967dc44e2",
+      "x": 518.3041127317025,
+      "y": 1275.4486513399704,
+      "rotation": 1.6,
+      "zIndex": 1763,
+      "title": "Hungarian Interior Ministry",
+      "description": "",
+      "photoSrc": null,
+      "width": 200,
+      "category": "organization"
+    },
+    {
+      "id": "5da88abd-5573-4832-82ad-b4da635bffa3",
+      "x": 946.7122556376934,
+      "y": 1249.7358064067205,
+      "rotation": -3.3,
+      "zIndex": 1134,
+      "title": "V Zaitseu",
+      "description": "",
+      "photoSrc": null,
+      "width": 200,
+      "category": "person"
+    },
+    {
+      "id": "b85f2d74-b005-423d-97c6-2b0733f7ea1c",
+      "x": 1362.792837284829,
+      "y": 1225.1917271522545,
+      "rotation": -2.5,
+      "zIndex": 1596,
+      "title": "Black Sea Heroin Smugglers",
+      "description": "",
+      "photoSrc": null,
+      "width": 200,
+      "category": "organization"
+    },
+    {
+      "id": "7b479ec5-cdeb-449c-adb6-d1204044b0ef",
+      "x": -133.07350744987266,
+      "y": 1585.4071294339146,
+      "rotation": -3.3,
+      "zIndex": 1957,
+      "title": "Prado Musseum",
+      "description": "",
+      "photoSrc": null,
+      "width": 200,
+      "category": "place"
+    },
+    {
+      "id": "cda0a17a-91aa-4420-a447-0721ad00fdbf",
+      "x": 344.0421566631984,
+      "y": 1548.5946498296246,
+      "rotation": -1.4,
+      "zIndex": 1938,
+      "title": "Lisboa import-export LLC",
+      "description": "",
+      "photoSrc": null,
+      "width": 200,
+      "category": "place"
+    },
+    {
+      "id": "bac3ee30-4d41-475f-9384-7d5337259e9d",
+      "x": 756.5275880009021,
+      "y": 1558.4324928615683,
+      "rotation": -1.8,
+      "zIndex": 1879,
+      "title": "H. Volov",
+      "description": "",
+      "photoSrc": null,
+      "width": 200,
+      "category": "person"
+    },
+    {
+      "id": "71208ab6-4f3c-4d83-ad88-2cc7cbc5f9ce",
+      "x": 1176.8177231253417,
+      "y": 1513.3776301891226,
+      "rotation": -0.7,
+      "zIndex": 1896,
+      "title": "ISTANBUL CUSTOMS",
+      "description": "",
+      "photoSrc": null,
+      "width": 200,
+      "category": "organization"
+    },
+    {
+      "id": "8887cfec-aab5-4771-ae74-301995ed3c87",
+      "x": 1571.6526313718284,
+      "y": 1499.7882536953434,
+      "rotation": 7.7,
+      "zIndex": 1912,
+      "title": "DAGESTAN MILITIA",
+      "description": "",
+      "photoSrc": null,
+      "width": 200,
+      "category": "organization"
+    },
+    {
+      "id": "a3934983-77a0-4c75-976e-b028b17d305c",
+      "x": -300.2985949394564,
+      "y": 1900.2397284118751,
+      "rotation": 2.2,
+      "zIndex": 2020,
+      "title": "MONTILLO",
+      "description": "Archeologist",
+      "photoSrc": null,
+      "width": 200,
+      "category": "person"
+    },
+    {
+      "id": "1e43fb0e-b704-4a60-a494-4cbdefce20d1",
+      "x": 93.925769031243,
+      "y": 1907.0367002044734,
+      "rotation": 4.3,
+      "zIndex": 2109,
+      "title": "S. S. Paradime",
+      "description": "",
+      "photoSrc": null,
+      "width": 200,
+      "category": "lead"
+    },
+    {
+      "id": "45307739-6f7b-4905-b4b1-7fa5fe3165d0",
+      "x": 553.0049316731457,
+      "y": 1897.0998630499907,
+      "rotation": -5.9,
+      "zIndex": 2207,
+      "title": "SZEGELI CLAN",
+      "description": "",
+      "photoSrc": null,
+      "width": 200,
+      "category": "organization"
+    },
+    {
+      "id": "f9f396da-f37a-45c1-8283-591153676e5c",
+      "x": 995.0231677861325,
+      "y": 1872.640355913304,
+      "rotation": 6.4,
+      "zIndex": 2276,
+      "title": "Ganymyde Nightclub",
+      "description": "",
+      "photoSrc": null,
+      "width": 200,
+      "category": "place"
+    },
+    {
+      "id": "941eea9c-6379-45ec-bfd2-4cb2b1c8bdb7",
+      "x": 1406.669491583467,
+      "y": 2001.0611851498938,
+      "rotation": 0.9,
+      "zIndex": 2373,
+      "title": "Radar Station",
+      "description": "",
+      "photoSrc": null,
+      "width": 200,
+      "category": "place"
+    },
+    {
+      "id": "b6e610d3-bff1-4cb7-a1ca-48e50cc17161",
+      "x": 1750.8643231443525,
+      "y": 1832.3119681200433,
+      "rotation": 1.8,
+      "zIndex": 2433,
+      "title": "ABIKHAZ GANGS",
+      "description": "",
+      "photoSrc": null,
+      "width": 200,
+      "category": "organization"
+    },
+    {
+      "id": "4eb021e0-9c0b-49cf-a99a-a241ab19d511",
+      "x": -632.2684357327464,
+      "y": 341.52843014104366,
+      "rotation": 4.2,
+      "zIndex": 3575,
+      "title": "6 - CORE LEADERSHIP",
+      "description": "",
+      "photoSrc": null,
+      "width": 200,
+      "category": null
+    },
+    {
+      "id": "ac5e9cde-5462-4d67-bd35-f0538ec158d5",
+      "x": -643.3815380048011,
+      "y": 681.6980105865168,
+      "rotation": -0.1,
+      "zIndex": 3517,
+      "title": "5 - SUPRANATIONAL",
+      "description": "",
+      "photoSrc": null,
+      "width": 200,
+      "category": null
+    },
+    {
+      "id": "8d4487d5-31b7-4d58-8845-a03c4f22f652",
+      "x": -639.0634217957571,
+      "y": 969.2533974938331,
+      "rotation": -6.3,
+      "zIndex": 3455,
+      "title": "4 - NATIONAL",
+      "description": "",
+      "photoSrc": null,
+      "width": 200,
+      "category": null
+    },
+    {
+      "id": "95f036d4-9ef9-47ac-a49f-2f9076a025d5",
+      "x": -636.0842355606161,
+      "y": 1272.0419288049331,
+      "rotation": 6.6,
+      "zIndex": 3446,
+      "title": "3 - PROVINCIAL",
+      "description": "",
+      "photoSrc": null,
+      "width": 200,
+      "category": null
+    },
+    {
+      "id": "1a667fac-1c3d-4d53-a282-de2abda243de",
+      "x": -634.4241196598186,
+      "y": 1585.7177760186541,
+      "rotation": 0.9,
+      "zIndex": 3306,
+      "title": "2 - City",
+      "description": "",
+      "photoSrc": null,
+      "width": 200,
+      "category": null
+    },
+    {
+      "id": "66e4717d-c0d5-43fb-bec6-0ab7b25804ca",
+      "x": -640.720283048347,
+      "y": 1875.7029998021537,
+      "rotation": 2.7,
+      "zIndex": 3242,
+      "title": "1 - Neighbourhood",
+      "description": "",
+      "photoSrc": null,
+      "width": 200,
+      "category": null
+    }
+  ],
+  "connections": [
+    {
+      "id": "e08b3d83-5198-4f5a-8aef-346a116f5516",
+      "fromId": "101d71f1-0490-47be-a3b5-42b082e3a76d",
+      "toId": "f1c4dc72-44ee-421d-83b3-7a9aae9616c2"
+    },
+    {
+      "id": "dcfb1293-e445-48f8-acd9-897fed98d369",
+      "fromId": "300867f5-9ec2-413c-b01b-413610b3c3cb",
+      "toId": "f1c4dc72-44ee-421d-83b3-7a9aae9616c2"
+    },
+    {
+      "id": "f92cc07b-6f9e-4679-9f11-21281dd58186",
+      "fromId": "300867f5-9ec2-413c-b01b-413610b3c3cb",
+      "toId": "6637db76-51a6-4baa-87e9-3b5c6fb0832f"
+    },
+    {
+      "id": "fb5a27ba-e8fe-459f-a85a-49891d72b22b",
+      "fromId": "f1c4dc72-44ee-421d-83b3-7a9aae9616c2",
+      "toId": "00178e82-24cf-427b-b343-f6a7036df363"
+    },
+    {
+      "id": "fbf06b1c-addd-4ff5-8481-e57b88e25edf",
+      "fromId": "238f2df4-fc0e-450d-86de-433253c6f20e",
+      "toId": "f1c4dc72-44ee-421d-83b3-7a9aae9616c2"
+    },
+    {
+      "id": "d9dcf8b4-48f4-4106-ab49-df61c136e636",
+      "fromId": "238f2df4-fc0e-450d-86de-433253c6f20e",
+      "toId": "cb1a7d33-f1ab-44fe-8704-e544bd6c4b41"
+    },
+    {
+      "id": "0057b858-ab8c-4475-8cb3-8d4c5923fd3b",
+      "fromId": "238f2df4-fc0e-450d-86de-433253c6f20e",
+      "toId": "e6ae83b7-21a5-40fa-834e-a9b967dc44e2"
+    },
+    {
+      "id": "7929516a-f487-4b72-b6d2-26913b20e71b",
+      "fromId": "6637db76-51a6-4baa-87e9-3b5c6fb0832f",
+      "toId": "5da88abd-5573-4832-82ad-b4da635bffa3"
+    },
+    {
+      "id": "5a732f45-6d5b-44aa-8532-04a0be85dc7d",
+      "fromId": "6637db76-51a6-4baa-87e9-3b5c6fb0832f",
+      "toId": "b85f2d74-b005-423d-97c6-2b0733f7ea1c"
+    },
+    {
+      "id": "5c024934-9eea-40af-b366-2b890d305701",
+      "fromId": "e6ae83b7-21a5-40fa-834e-a9b967dc44e2",
+      "toId": "5da88abd-5573-4832-82ad-b4da635bffa3"
+    },
+    {
+      "id": "50392441-e271-43f2-a05e-35758ff24f3c",
+      "fromId": "5da88abd-5573-4832-82ad-b4da635bffa3",
+      "toId": "b85f2d74-b005-423d-97c6-2b0733f7ea1c"
+    },
+    {
+      "id": "dfa14c16-ff1b-4bdd-b9bf-0833b9cac25b",
+      "fromId": "cb1a7d33-f1ab-44fe-8704-e544bd6c4b41",
+      "toId": "7b479ec5-cdeb-449c-adb6-d1204044b0ef"
+    },
+    {
+      "id": "efddcb77-6c59-419a-9326-6d8d19764ef0",
+      "fromId": "7b479ec5-cdeb-449c-adb6-d1204044b0ef",
+      "toId": "cda0a17a-91aa-4420-a447-0721ad00fdbf"
+    },
+    {
+      "id": "715943b2-545a-43c1-9376-54a1ec92a0e9",
+      "fromId": "cb1a7d33-f1ab-44fe-8704-e544bd6c4b41",
+      "toId": "cda0a17a-91aa-4420-a447-0721ad00fdbf"
+    },
+    {
+      "id": "cbc8a5b0-a1d9-42d6-8e63-dc8effdf0307",
+      "fromId": "b85f2d74-b005-423d-97c6-2b0733f7ea1c",
+      "toId": "71208ab6-4f3c-4d83-ad88-2cc7cbc5f9ce"
+    },
+    {
+      "id": "edbbc1cc-f416-48b4-a202-c6ed1c67dd0f",
+      "fromId": "b85f2d74-b005-423d-97c6-2b0733f7ea1c",
+      "toId": "8887cfec-aab5-4771-ae74-301995ed3c87"
+    },
+    {
+      "id": "b042e76e-e79e-4280-b751-4b056ac4524f",
+      "fromId": "bac3ee30-4d41-475f-9384-7d5337259e9d",
+      "toId": "71208ab6-4f3c-4d83-ad88-2cc7cbc5f9ce"
+    },
+    {
+      "id": "ebdedc06-3243-483c-8698-1db61f736a8e",
+      "fromId": "a3934983-77a0-4c75-976e-b028b17d305c",
+      "toId": "7b479ec5-cdeb-449c-adb6-d1204044b0ef"
+    },
+    {
+      "id": "06bedcf5-a203-4b84-b3ee-74f7065652d0",
+      "fromId": "1e43fb0e-b704-4a60-a494-4cbdefce20d1",
+      "toId": "cda0a17a-91aa-4420-a447-0721ad00fdbf"
+    },
+    {
+      "id": "46a55aee-d553-4c3e-a912-1f8c615816ff",
+      "fromId": "e6ae83b7-21a5-40fa-834e-a9b967dc44e2",
+      "toId": "45307739-6f7b-4905-b4b1-7fa5fe3165d0"
+    },
+    {
+      "id": "782b51f9-185f-4cdf-ad28-9ae62c1e2fb0",
+      "fromId": "1e43fb0e-b704-4a60-a494-4cbdefce20d1",
+      "toId": "bac3ee30-4d41-475f-9384-7d5337259e9d"
+    },
+    {
+      "id": "a1d7cb90-0c93-45f7-bf59-5170f9fd206b",
+      "fromId": "f9f396da-f37a-45c1-8283-591153676e5c",
+      "toId": "bac3ee30-4d41-475f-9384-7d5337259e9d"
+    },
+    {
+      "id": "6f52ad24-a601-4bf1-9b82-a686ac6c259f",
+      "fromId": "f9f396da-f37a-45c1-8283-591153676e5c",
+      "toId": "941eea9c-6379-45ec-bfd2-4cb2b1c8bdb7"
+    },
+    {
+      "id": "4a853417-b6e4-485b-a099-d548ff65c912",
+      "fromId": "b6e610d3-bff1-4cb7-a1ca-48e50cc17161",
+      "toId": "8887cfec-aab5-4771-ae74-301995ed3c87"
+    },
+    {
+      "id": "b25934bf-1ef7-4a68-99c9-3227628b619f",
+      "fromId": "941eea9c-6379-45ec-bfd2-4cb2b1c8bdb7",
+      "toId": "b6e610d3-bff1-4cb7-a1ca-48e50cc17161"
+    },
+    {
+      "id": "ea3d3b86-042b-4f73-ab7f-ac962e20f614",
+      "fromId": "b6e610d3-bff1-4cb7-a1ca-48e50cc17161",
+      "toId": "f9f396da-f37a-45c1-8283-591153676e5c"
+    }
+  ],
+  "categories": [
+    {
+      "id": "person",
+      "label": "Person",
+      "colorPrimary": "#85c1e9",
+      "colorSecondary": "#2471a3",
+      "icon": "👤"
+    },
+    {
+      "id": "organization",
+      "label": "Organization",
+      "colorPrimary": "#d44a4a",
+      "colorSecondary": "#a10d0d",
+      "icon": "🏢"
+    },
+    {
+      "id": "place",
+      "label": "Place",
+      "colorPrimary": "#82e0aa",
+      "colorSecondary": "#1e8449",
+      "icon": "📍"
+    },
+    {
+      "id": "evidence",
+      "label": "Evidence",
+      "colorPrimary": "#c39bd3",
+      "colorSecondary": "#7d3c98",
+      "icon": "🔍"
+    },
+    {
+      "id": "lead",
+      "label": "Lead",
+      "colorPrimary": "#f0b27a",
+      "colorSecondary": "#ca6f1e",
+      "icon": "💡"
+    }
+  ],
+  "background": {
+    "type": "cork",
+    "color": "#000000",
+    "imageUrl": null,
+    "brightness": 0.44
+  }
+}

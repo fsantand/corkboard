@@ -170,6 +170,12 @@ export const useCorkboardStore = defineStore('corkboard', () => {
     Object.assign(background.value, fields)
   }
 
+  function clearBoard() {
+    items.value = []
+    connections.value = []
+    zCounter = 0
+  }
+
   function importBoard(data) {
     items.value = (data.items ?? []).map((i) => ({
       id: i.id,
@@ -208,6 +214,7 @@ export const useCorkboardStore = defineStore('corkboard', () => {
     updateCategory,
     deleteCategory,
     setBackground,
+    clearBoard,
     importBoard,
   }
 })

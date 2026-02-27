@@ -83,6 +83,12 @@ function importBoard() {
   input.click()
 }
 
+function onClearBoard() {
+  if (window.confirm('Clear all cards and connections? This cannot be undone.')) {
+    store.clearBoard()
+  }
+}
+
 async function exportBoard() {
   const items = await Promise.all(
     store.items.map(async (item) => {
@@ -262,6 +268,7 @@ async function exportBoard() {
           <button class="btn" @click="importBoard">↑ Import</button>
           <button class="btn" @click="exportBoard">↓ Export</button>
         </div>
+        <button class="btn btn--danger" @click="onClearBoard">✕ Clear Board</button>
       </section>
     </div>
   </aside>
@@ -566,5 +573,15 @@ input[type='color'] {
 
 .btn:hover {
   background: #3d556b;
+}
+
+.btn--danger {
+  background: #922b21;
+  margin-top: 8px;
+  width: 100%;
+}
+
+.btn--danger:hover {
+  background: #b03a2e;
 }
 </style>
