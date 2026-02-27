@@ -1,5 +1,6 @@
 import { ref, watch } from 'vue'
 import { defineStore } from 'pinia'
+import { DEFAULT_CATEGORIES } from '@/constants/categories'
 
 const STORAGE_KEY = 'corkboard-state'
 
@@ -8,6 +9,8 @@ export const useCorkboardStore = defineStore('corkboard', () => {
   const connections = ref([])
   const connectMode = ref(false)
   const connectFrom = ref(null)
+  const categories = ref([])
+  const background = ref({ type: 'cork', color: '#c8a96e', imageUrl: null, brightness: 0.5 })
   let zCounter = 0
 
   // Bootstrap from localStorage
@@ -29,19 +32,31 @@ export const useCorkboardStore = defineStore('corkboard', () => {
       }))
       connections.value = parsed.connections ?? []
       zCounter = Math.max(0, ...items.value.map((i) => i.zIndex ?? 0))
+      categories.value = parsed.categories
+        ? parsed.categories.map((c) => ({ ...c }))
+        : DEFAULT_CATEGORIES.map((c) => ({ ...c }))
+      Object.assign(background.value, parsed.background ?? {})
     } catch {
       // ignore corrupt data
+      categories.value = DEFAULT_CATEGORIES.map((c) => ({ ...c }))
     }
+  } else {
+    categories.value = DEFAULT_CATEGORIES.map((c) => ({ ...c }))
   }
 
   // Persist on every change
   watch(
-    [items, connections],
+    [items, connections, categories, background],
     () => {
       try {
         localStorage.setItem(
           STORAGE_KEY,
-          JSON.stringify({ items: items.value, connections: connections.value }),
+          JSON.stringify({
+            items: items.value,
+            connections: connections.value,
+            categories: categories.value,
+            background: background.value,
+          }),
         )
       } catch (e) {
         console.warn('corkboard: localStorage quota exceeded', e)
@@ -130,6 +145,31 @@ export const useCorkboardStore = defineStore('corkboard', () => {
     connections.value = connections.value.filter((c) => c.id !== id)
   }
 
+  function addCategory() {
+    const id = crypto.randomUUID()
+    categories.value.push({
+      id,
+      label: '',
+      colorPrimary: '#aaaaaa',
+      colorSecondary: '#666666',
+      icon: '🏷️',
+    })
+    return id
+  }
+
+  function updateCategory(id, fields) {
+    const cat = categories.value.find((c) => c.id === id)
+    if (cat) Object.assign(cat, fields)
+  }
+
+  function deleteCategory(id) {
+    categories.value = categories.value.filter((c) => c.id !== id)
+  }
+
+  function setBackground(fields) {
+    Object.assign(background.value, fields)
+  }
+
   function importBoard(data) {
     items.value = (data.items ?? []).map((i) => ({
       id: i.id,
@@ -145,6 +185,8 @@ export const useCorkboardStore = defineStore('corkboard', () => {
     }))
     connections.value = data.connections ?? []
     zCounter = Math.max(0, ...items.value.map((i) => i.zIndex ?? 0))
+    if (data.categories) categories.value = data.categories.map((c) => ({ ...c }))
+    if (data.background) Object.assign(background.value, data.background)
   }
 
   return {
@@ -152,6 +194,8 @@ export const useCorkboardStore = defineStore('corkboard', () => {
     connections,
     connectMode,
     connectFrom,
+    categories,
+    background,
     addItem,
     updateItem,
     moveItem,
@@ -160,6 +204,10 @@ export const useCorkboardStore = defineStore('corkboard', () => {
     finishConnect,
     cancelConnect,
     removeConnection,
+    addCategory,
+    updateCategory,
+    deleteCategory,
+    setBackground,
     importBoard,
   }
 })

@@ -1,7 +1,6 @@
 <script setup>
 import { ref, computed } from 'vue'
 import { useCorkboardStore } from '@/stores/corkboard'
-import { CATEGORIES } from '@/constants/categories'
 
 const props = defineProps({
   item: {
@@ -26,7 +25,7 @@ const emit = defineEmits(['drag', 'pin-click', 'delete', 'hover', 'select'])
 
 const store = useCorkboardStore()
 
-const activeCategory = computed(() => CATEGORIES.find((c) => c.id === props.item.category))
+const activeCategory = computed(() => store.categories.find((c) => c.id === props.item.category))
 
 const isDragging = ref(false)
 const isHovered = ref(false)

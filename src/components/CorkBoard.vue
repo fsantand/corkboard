@@ -6,6 +6,7 @@ import StringLayer from './StringLayer.vue'
 import BoardToolbar from './BoardToolbar.vue'
 import ItemAside from './ItemAside.vue'
 import MiniMap from './MiniMap.vue'
+import ConfigPanel from './ConfigPanel.vue'
 
 const store = useCorkboardStore()
 
@@ -20,6 +21,7 @@ function onResize() {
 const pointerPos = ref({ x: 0, y: 0 })
 const hoveredItemId = ref(null)
 const selectedItemId = ref(null)
+const configOpen = ref(false)
 
 // Viewport transform
 const panX = ref(0)
@@ -44,6 +46,21 @@ const dimmedIds = computed(() => {
     if (c.toId === hoveredItemId.value) lit.add(c.fromId)
   }
   return new Set(store.items.map((i) => i.id).filter((id) => !lit.has(id)))
+})
+
+const boardBgStyle = computed(() => {
+  const bg = store.background
+  if (bg.type === 'color') {
+    return { backgroundImage: 'none', backgroundColor: bg.color }
+  }
+  if (bg.type === 'image' && bg.imageUrl) {
+    return {
+      backgroundImage: `url(${bg.imageUrl})`,
+      backgroundSize: 'cover',
+      backgroundPosition: 'center',
+    }
+  }
+  return {}
 })
 
 function onPointerMove(e) {
@@ -117,7 +134,13 @@ function centerBoard() {
 }
 
 function onKeydown(e) {
-  if (e.key === 'Escape') store.cancelConnect()
+  if (e.key === 'Escape') {
+    if (configOpen.value) {
+      configOpen.value = false
+    } else {
+      store.cancelConnect()
+    }
+  }
 }
 
 function onMouseDown(e) {
@@ -179,9 +202,17 @@ onUnmounted(() => {
     ref="boardRef"
     class="cork-board"
     :class="{ 'connect-mode': store.connectMode, panning: isPanning }"
-    :style="{ backgroundPosition: `${panX}px ${panY}px` }"
+    :style="[
+      boardBgStyle,
+      store.background.type === 'cork' ? { backgroundPosition: `${panX}px ${panY}px` } : {},
+    ]"
     @pointermove="onPointerMove"
   >
+    <div
+      class="board-overlay"
+      :style="{ opacity: 1 - store.background.brightness }"
+    />
+
     <div
       class="canvas"
       :style="{ transform: `translate(${panX}px, ${panY}px) scale(${zoom})` }"
@@ -216,6 +247,7 @@ onUnmounted(() => {
       @add-card="onAddCard"
       @cancel-connect="store.cancelConnect"
       @center-board="centerBoard"
+      @open-config="configOpen = true"
     />
 
     <!-- Connect mode hint -->
@@ -235,6 +267,8 @@ onUnmounted(() => {
       :view-height="viewH"
       @update-pan="onMinimapPan"
     />
+
+    <ConfigPanel :open="configOpen" @close="configOpen = false" />
   </div>
 </template>
 
@@ -249,13 +283,13 @@ onUnmounted(() => {
   background-size: auto;
 }
 
-.cork-board::before {
-  content: '';
+.board-overlay {
   position: absolute;
   inset: 0;
-  background: rgba(0, 0, 0, 0.50);
+  background: #000;
   pointer-events: none;
   z-index: 0;
+  transition: opacity 0.2s;
 }
 
 .cork-board.connect-mode {

@@ -2,7 +2,6 @@
 import { ref, watch, nextTick } from 'vue'
 import { useCorkboardStore } from '@/stores/corkboard'
 import AddPhotoModal from './AddPhotoModal.vue'
-import { CATEGORIES } from '@/constants/categories'
 
 const props = defineProps({
   item: {
@@ -59,14 +58,14 @@ function onPhotoConfirm(src) {
 
           <div class="category-picker">
             <button
-              v-for="cat in CATEGORIES"
+              v-for="cat in store.categories"
               :key="cat.id"
               class="cat-btn"
               :class="{ active: item.category === cat.id }"
               :style="{ '--cat-primary': cat.colorPrimary, '--cat-secondary': cat.colorSecondary }"
               @click="store.updateItem(item.id, { category: item.category === cat.id ? null : cat.id })"
             >
-              {{ cat.label }}
+              {{ cat.icon }} {{ cat.label }}
             </button>
           </div>
 

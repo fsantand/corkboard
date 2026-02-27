@@ -37,7 +37,7 @@ npm run lint
 
 - [x] Add board and items controls
 - [x] Add board persistance and state management
+- [x] Add customizable properties for color, bg
 - [ ] Add multi session management
-- [ ] Add customizeable properties for color, bg
 - [ ] Improve aside structure
 - [ ] Mobile support
