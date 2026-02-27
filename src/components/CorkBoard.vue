@@ -11,6 +11,7 @@ import ConfigPanel from './ConfigPanel.vue'
 const store = useCorkboardStore()
 
 const boardRef = ref(null)
+const itemAsideRef = ref(null)
 const viewW = ref(window.innerWidth)
 const viewH = ref(window.innerHeight)
 
@@ -91,6 +92,11 @@ function onItemHover(id) {
 
 function onItemSelect(id) {
   selectedItemId.value = selectedItemId.value === id ? null : id
+}
+
+function onItemDblClick(id) {
+  selectedItemId.value = id
+  itemAsideRef.value?.openAndFocus()
 }
 
 function onDelete(id) {
@@ -239,6 +245,7 @@ onUnmounted(() => {
         @delete="onDelete"
         @hover="onItemHover"
         @select="onItemSelect"
+        @dblclick="onItemDblClick"
       />
     </div>
 
@@ -255,7 +262,7 @@ onUnmounted(() => {
       Click another pin to connect, or press Esc to cancel
     </div>
 
-    <ItemAside :item="activeItem" />
+    <ItemAside ref="itemAsideRef" :item="activeItem" />
 
     <MiniMap
       :items="store.items"

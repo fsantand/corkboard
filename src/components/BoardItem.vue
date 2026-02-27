@@ -21,7 +21,7 @@ const props = defineProps({
   },
 })
 
-const emit = defineEmits(['drag', 'pin-click', 'delete', 'hover', 'select'])
+const emit = defineEmits(['drag', 'pin-click', 'delete', 'hover', 'select', 'dblclick'])
 
 const store = useCorkboardStore()
 
@@ -31,6 +31,7 @@ const isDragging = ref(false)
 const isHovered = ref(false)
 const dragMoved = ref(false)
 const dragStart = ref({ ptrX: 0, ptrY: 0, itemX: 0, itemY: 0 })
+const lastClickTime = ref(0)
 
 function onPointerDown(e) {
   // Don't initiate drag if target is the pushpin or delete button
@@ -64,6 +65,11 @@ function onPointerUp(e) {
   isDragging.value = false
   e.currentTarget.releasePointerCapture(e.pointerId)
   if (!dragMoved.value) {
+    const now = Date.now()
+    if (now - lastClickTime.value < 300) {
+      emit('dblclick', props.item.id)
+    }
+    lastClickTime.value = now
     emit('select', props.item.id)
   }
 }

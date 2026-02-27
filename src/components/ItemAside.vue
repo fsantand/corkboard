@@ -28,6 +28,13 @@ function onPhotoConfirm(src) {
   store.updateItem(props.item.id, { photoSrc: src })
   showPhotoModal.value = false
 }
+
+function openAndFocus() {
+  collapsed.value = false
+  nextTick(() => titleInputRef.value?.focus())
+}
+
+defineExpose({ openAndFocus })
 </script>
 
 <template>
