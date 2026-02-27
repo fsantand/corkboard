@@ -154,6 +154,76 @@ async function exportBoard() {
     </div>
 
     <div class="panel-body">
+      <!-- Board data section -->
+      <section class="panel-section">
+        <h3 class="section-title">Board Data</h3>
+        <div class="data-btns">
+          <button class="btn" @click="exportBoard">↓ Export</button>
+          <button class="btn" @click="importBoard">↑ Import</button>
+        </div>
+        <select class="template-select" @change="onLoadTemplate">
+          <option value="">Load template…</option>
+          <option v-for="t in templates" :key="t.label" :value="t.label">{{ t.label }}</option>
+        </select>
+        <button class="btn btn--danger" @click="onClearBoard">✕ Clear Board</button>
+      </section>
+
+      <!-- Categories section -->
+      <section class="panel-section">
+        <h3 class="section-title">Categories</h3>
+
+        <div class="category-list">
+          <div v-for="cat in store.categories" :key="cat.id" class="category-row">
+            <!-- View mode -->
+            <template v-if="editingId !== cat.id">
+              <span class="cat-icon">{{ cat.icon }}</span>
+              <span class="cat-label">{{ cat.label || '(unnamed)' }}</span>
+              <span class="cat-swatch" :style="{ background: cat.colorPrimary }" />
+              <span class="cat-swatch" :style="{ background: cat.colorSecondary }" />
+              <button class="icon-btn" title="Edit" @click="startEdit(cat.id)">✎</button>
+              <button class="icon-btn icon-btn--danger" title="Delete" @click="onDeleteCategory(cat.id)">✕</button>
+            </template>
+
+            <!-- Edit mode -->
+            <template v-else>
+              <div class="cat-edit-row">
+                <div class="emoji-wrap">
+                  <button class="icon-edit-btn" @click="emojiPickerForId = emojiPickerForId === cat.id ? null : cat.id">
+                    {{ cat.icon }}
+                  </button>
+                  <EmojiPicker
+                    v-if="emojiPickerForId === cat.id"
+                    @pick="(e) => store.updateCategory(cat.id, { icon: e })"
+                    @close="emojiPickerForId = null"
+                  />
+                </div>
+                <input
+                  class="text-input cat-name-input"
+                  :value="cat.label"
+                  placeholder="Name..."
+                  @input="store.updateCategory(cat.id, { label: $event.target.value })"
+                />
+                <input
+                  type="color"
+                  :value="cat.colorPrimary"
+                  title="Primary color"
+                  @input="store.updateCategory(cat.id, { colorPrimary: $event.target.value })"
+                />
+                <input
+                  type="color"
+                  :value="cat.colorSecondary"
+                  title="Secondary color"
+                  @input="store.updateCategory(cat.id, { colorSecondary: $event.target.value })"
+                />
+                <button class="icon-btn icon-btn--done" title="Done" @click="doneEdit">✓</button>
+              </div>
+            </template>
+          </div>
+        </div>
+
+        <button class="add-cat-btn" @click="onAddCategory">+ Add Category</button>
+      </section>
+
       <!-- Background section -->
       <section class="panel-section">
         <h3 class="section-title">Background</h3>
@@ -226,75 +296,6 @@ async function exportBoard() {
         </div>
       </section>
 
-      <!-- Categories section -->
-      <section class="panel-section">
-        <h3 class="section-title">Categories</h3>
-
-        <div class="category-list">
-          <div v-for="cat in store.categories" :key="cat.id" class="category-row">
-            <!-- View mode -->
-            <template v-if="editingId !== cat.id">
-              <span class="cat-icon">{{ cat.icon }}</span>
-              <span class="cat-label">{{ cat.label || '(unnamed)' }}</span>
-              <span class="cat-swatch" :style="{ background: cat.colorPrimary }" />
-              <span class="cat-swatch" :style="{ background: cat.colorSecondary }" />
-              <button class="icon-btn" title="Edit" @click="startEdit(cat.id)">✎</button>
-              <button class="icon-btn icon-btn--danger" title="Delete" @click="onDeleteCategory(cat.id)">✕</button>
-            </template>
-
-            <!-- Edit mode -->
-            <template v-else>
-              <div class="cat-edit-row">
-                <div class="emoji-wrap">
-                  <button class="icon-edit-btn" @click="emojiPickerForId = emojiPickerForId === cat.id ? null : cat.id">
-                    {{ cat.icon }}
-                  </button>
-                  <EmojiPicker
-                    v-if="emojiPickerForId === cat.id"
-                    @pick="(e) => store.updateCategory(cat.id, { icon: e })"
-                    @close="emojiPickerForId = null"
-                  />
-                </div>
-                <input
-                  class="text-input cat-name-input"
-                  :value="cat.label"
-                  placeholder="Name..."
-                  @input="store.updateCategory(cat.id, { label: $event.target.value })"
-                />
-                <input
-                  type="color"
-                  :value="cat.colorPrimary"
-                  title="Primary color"
-                  @input="store.updateCategory(cat.id, { colorPrimary: $event.target.value })"
-                />
-                <input
-                  type="color"
-                  :value="cat.colorSecondary"
-                  title="Secondary color"
-                  @input="store.updateCategory(cat.id, { colorSecondary: $event.target.value })"
-                />
-                <button class="icon-btn icon-btn--done" title="Done" @click="doneEdit">✓</button>
-              </div>
-            </template>
-          </div>
-        </div>
-
-        <button class="add-cat-btn" @click="onAddCategory">+ Add Category</button>
-      </section>
-
-      <!-- Board data section -->
-      <section class="panel-section">
-        <h3 class="section-title">Board Data</h3>
-        <div class="data-btns">
-          <button class="btn" @click="importBoard">↑ Import</button>
-          <button class="btn" @click="exportBoard">↓ Export</button>
-        </div>
-        <select class="template-select" @change="onLoadTemplate">
-          <option value="">Load template…</option>
-          <option v-for="t in templates" :key="t.label" :value="t.label">{{ t.label }}</option>
-        </select>
-        <button class="btn btn--danger" @click="onClearBoard">✕ Clear Board</button>
-      </section>
     </div>
   </aside>
 </template>
